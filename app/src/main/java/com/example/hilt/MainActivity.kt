@@ -1,40 +1,28 @@
 package com.example.hilt
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //Field Injection
     @Inject
-    lateinit var someClass: someClass
+    @Named("String 2")
+    lateinit var str: String
+
+    private val viewModel: TestViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        println(someClass.doaThing())
-        println(someClass.doSomeOtherThing())
-    }
-}
+        Log.d("MainActivity", "onCreate:Test String From MainActivity: $str")
 
-class someClass
-@Inject constructor(private val someOtherClass: someOtherClass) {
-
-    fun doaThing(): String {
-        return "Did A Thing!"
-    }
-
-    fun doSomeOtherThing(): String {
-        return someOtherClass.doSomeOtherThing()
-    }
-}
-
-class someOtherClass @Inject constructor() {
-    fun doSomeOtherThing(): String {
-        return "Did Some Other Thing!"
+        viewModel
     }
 }
